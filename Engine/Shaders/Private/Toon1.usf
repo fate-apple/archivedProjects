@@ -1,0 +1,43 @@
+﻿
+#include "/Engine/Generated/Material.ush"
+#include "/Engine/Generated/VertexFactory.ush"
+ 
+struct FToonOutlinePassVSToPS
+{
+	FVertexFactoryInterpolantsVSToPS FactoryInterpolants;
+	float4 Position : SV_POSITION;
+};
+ 
+#define FVertexOutput FToonOutlinePassVSToPS
+#define VertexFactoryGetInterpolants VertexFactoryGetInterpolantsVSToPS
+/*=============================================================================
+ * Vertex Shader
+ *============================================================================*/
+#if VERTEXSHADER
+void MainVS(
+	FVertexFactoryInput Input,
+	out FVertexOutput Output
+)
+{
+	ResolvedView = ResolveView();
+	FVertexFactoryIntermediates VFIntermediates = GetVertexFactoryIntermediates(Input);
+	float4 WorldPositionExcludingWPO = VertexFactoryGetWorldPosition(Input, VFIntermediates);
+	float4 WorldPosition = WorldPositionExcludingWPO;
+	float3 WorldNormal = VertexFactoryGetWorldNormal(Input, VFIntermediates);
+	half3x3 TangentToLocal = VertexFactoryGetTangentToLocal(Input, VFIntermediates);	
+	FMaterialVertexParameters VertexParameters = GetMaterialVertexParameters(Input, VFIntermediates, WorldPosition.xyz, TangentToLocal);
+	
+	float4 RasterizedWorldPosition = VertexFactoryGetRasterizedWorldPosition(Input, VFIntermediates, WorldPosition);
+	Output.Position = INVARIANT(mul(RasterizedWorldPosition, ResolvedView.TranslatedWorldToClip));
+	Output.FactoryInterpolants = VertexFactoryGetInterpolants(Input, VFIntermediates, VertexParameters);
+}
+
+#endif // VERTEXSHADER
+
+void MainPS(
+	out float4 OutColor : SV_Target0
+)
+{
+	//OutColor = float4(1, 0.6, 0, 1);
+	OutColor = float4(0, 0.6, 0.8, 1);
+}

@@ -1,0 +1,67 @@
+﻿// Aniso tangent input (UV space) are always length agnostic, so we can gain an additional GBuffer float channel by encoding it to 1D. Only works for materials where the Tangent is also plugged into the slot that writes to the World Normal buffer. (Hair)
+float EncodeUnitVectorToFloat(float2 N)
+{
+	N = normalize(N);
+	float result = ( N.y > 0 ) ? ( N.x + 1.1 ) : N.x;
+	return result / 1.1;
+}
+
+float2 DecodeUnitVectorFromFloat(float x)
+{
+	float2 N = float2(0,0);
+	N.x = x * 1.1;
+	if (x > 1)
+	{
+		N.x = N.x - 1.1;
+		N.y = -1 * ( sqrt( 1 - pow(N.x,2) ) );
+	}
+	else
+	{
+		N.y = sqrt( 1 - pow(N.x,2) );
+	}
+	return normalize(N);
+}
+
+
+// encodes 8 steps of specular softness into the desired buffer. used for toon skin
+float EncodeSpecRange (float Xi, float Yi)
+{
+	const float Div = 8;
+	Xi = saturate(Xi) * 0.97 + 0.015;
+	Yi = saturate(Yi) * 0.8;
+
+	float Offset = floor(Yi * Div) / Div;
+	float Range = Xi / Div;
+	float Result = Offset + Range;
+	return Result;
+}
+
+float2 DecodeSpecRange (float InputVal)
+{
+	// for some reason, putting the divisor into a variable breaks the encoding. Might be some weird hlsl thing
+	const float HY = fmod( floor(InputVal * 8), 8 ) * 0.125;
+	float HX = ( InputVal - HY ) * 8;
+	HX = HX * (1/0.98) - 0.01;
+	return float2(HX, HY);
+}
+
+// Used for switching between soft and hard sss modes for toon skin
+float EncodeSSSModeSwitch (float Xi, float Yi)
+{
+	const float Div = 2;
+	const float Div2 = 2.1;
+	Yi = clamp( Yi, 0, 0.99);
+	float Offset = floor(Yi * Div) / Div;
+	float Range = Xi / Div2;
+	float Result = Offset + Range;
+	return Result / 1.5;
+}
+
+float2 DecodeSSSModeSwitch (float InputVal)
+{
+	// for some reason, putting the divisor into a variable breaks the encoding. Might be some weird hlsl thing
+	InputVal = InputVal * 1.5;
+	const float HY = fmod( floor(InputVal * 2), 2 ) * 0.5;
+	float HX = ( InputVal - HY  ) * 2.1;
+	return float2(HX, HY );
+}
