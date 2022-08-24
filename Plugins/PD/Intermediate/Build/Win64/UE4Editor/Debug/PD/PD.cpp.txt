@@ -1,0 +1,2 @@
+D:\EpicGame\UE_Projects\rope_1\Plugins\PD\Intermediate\Build\Win64\UE4Editor\Debug\PD\Definitions.PD.h
+D:\EpicGame\UE_Projects\rope_1\Plugins\PD\Source\PD\Public\PD.h

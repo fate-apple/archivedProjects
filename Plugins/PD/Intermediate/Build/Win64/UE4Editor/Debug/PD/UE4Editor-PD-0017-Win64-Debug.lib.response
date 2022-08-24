@@ -1,0 +1,14 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UE4Editor-PD-0017-Win64-Debug.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"C:\Projects\Unreal\GitHub\UnrealEngine\Engine\Intermediate\Build\Win64\UE4Editor\Debug\Engine\SharedPCH.Engine.ShadowErrors.h.obj"
+"D:\EpicGame\UE_Projects\rope_1\Plugins\PD\Intermediate\Build\Win64\UE4Editor\Debug\PD\Module.PD.cpp.obj"
+"D:\EpicGame\UE_Projects\rope_1\Plugins\PD\Intermediate\Build\Win64\UE4Editor\Debug\PD\Module.PD.gen.cpp.obj"
+"C:\Projects\Unreal\GitHub\UnrealEngine\Engine\Intermediate\Build\Win64\UE4Editor\Debug\Default.rc2.res"
+/OUT:"D:\EpicGame\UE_Projects\rope_1\Plugins\PD\Intermediate\Build\Win64\UE4Editor\Debug\PD\UE4Editor-PD-0017-Win64-Debug.lib"
+/INCLUDE:IMPLEMENT_MODULE_PD

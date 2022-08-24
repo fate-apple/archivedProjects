@@ -1,0 +1,28 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.PD.cpp.obj": [
+			"PD.cpp.obj",
+			"PDAnimationConstraints.cpp.obj",
+			"PDAnimationQuatConstraints.cpp.obj",
+			"PDBendTwistConstraints.cpp.obj",
+			"PDEvolution.cpp.obj",
+			"PDRopeComponent.cpp.obj",
+			"PDRopeConfig.cpp.obj",
+			"PDRopeConstraints.cpp.obj",
+			"PDRopeSimulation.cpp.obj",
+			"PDRopeSimulationFactory.cpp.obj",
+			"PDRopeSimulationRope.cpp.obj",
+			"PDRopeSimulationSolver.cpp.obj",
+			"PDStretchShearConstraints.cpp.obj",
+			"RopeSimulationFactory.cpp.obj",
+			"RopeSimulationInterface.cpp.obj"
+		],
+		"Module.PD.gen.cpp.obj": [
+			"PD.init.gen.cpp.obj",
+			"PDRopeComponent.gen.cpp.obj",
+			"PDRopeConfig.gen.cpp.obj",
+			"RopeSimulationFactory.gen.cpp.obj"
+		]
+	}
+}
